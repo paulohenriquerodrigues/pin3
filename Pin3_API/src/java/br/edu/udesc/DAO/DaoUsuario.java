@@ -159,7 +159,7 @@ public class DaoUsuario {
 
         Connection con = Conexao.createConnection();
 
-        String sqlSelect = "SELECT * FROM public.tbusuario where id='" + id;
+        String sqlSelect = "SELECT * FROM public.tbusuario where id=" + id;
         PreparedStatement stmt = con.prepareStatement(sqlSelect);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {

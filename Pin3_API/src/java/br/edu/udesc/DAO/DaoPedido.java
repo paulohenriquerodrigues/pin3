@@ -20,6 +20,9 @@ import java.util.List;
 public class DaoPedido {
     
     DaoUsuario usuarioDao = new DaoUsuario();
+    
+    private DaoEndereco daoEndereco = new DaoEndereco();
+    private DaoProduto  daoProduto  = new DaoProduto();
 
     public void cadastrar(Object obj) throws SQLException, ClassNotFoundException {
         Connection con = Conexao.createConnection();
@@ -63,44 +66,63 @@ public class DaoPedido {
 
     }
 
-    public List<Produto> listarTodos() throws SQLException, ClassNotFoundException {
-        List<Produto> produtos = new ArrayList<>();
+    public List<Pedido> listarTodos() throws SQLException, ClassNotFoundException {
+        List<Pedido> pedidos = new ArrayList<>();
         Connection con = Conexao.createConnection();
 
-        String sqlSelect = "SELECT * FROM public.tbproduto";
+        String sqlSelect = "SELECT * FROM tbpedido";
 
         PreparedStatement stmt = con.prepareStatement(sqlSelect);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            Produto p = new Produto();
+            
+            Pedido p = new Pedido();
             p.setId(rs.getInt("id"));
-            p.setDescricao(rs.getString("descricao"));
-            p.setDatavalidade(rs.getDate("datavalidade"));
-            p.setDatafabricacao(rs.getDate("datafabricacao"));
-            p.setPreco(rs.getDouble("preco"));
-            p.setLaboratorio(rs.getString("laboratorio"));
-            p.setLote(rs.getInt("lote"));
-            p.setQuantidade(rs.getInt("quantidade"));
-            p.setUsocontinuo(rs.getBoolean("usocontinuo"));
+            p.setStatus(rs.getString("status"));
             
-            int idcategoria = rs.getInt("categoriaid");
             
-            PreparedStatement s = con.prepareStatement("Select * from public.tbcategoria where id = " + idcategoria);
-            ResultSet r = s.executeQuery();
-            while (r.next()) {
-                Categoria c = new Categoria();
-                c.setId(r.getInt("id"));
-                c.setDescricao(r.getString("descricao"));       
-                p.setCategoria(c);
-            }
+            p.setProdutos(daoProduto.listarProdutosPedido(p.getId()));
+            
+            
+            p.setUsuario(usuarioDao.retornaUsuario(rs.getInt("usuarioid")));
+            p.setEndereco(p.getUsuario().getEndereco());
             
             if (p != null) {
-                produtos.add(p);
+                pedidos.add(p);
             }
         }
+        
         con.close();
 
-        return produtos;
-
+        return pedidos;
+    }
+    
+    public List<Pedido> listarPedidosUsuario(long usuId) throws SQLException, ClassNotFoundException {
+        List<Pedido> pedidos = new ArrayList<>();
+        Connection con = Conexao.createConnection();
+        
+        String sqlSelect = "SELECT * FROM tbpedido WHERE usuarioid = " + usuId;
+        
+        PreparedStatement stmt = con.prepareStatement(sqlSelect);
+        ResultSet rs =  stmt.executeQuery();
+        
+        while(rs.next()) {
+            Pedido p = new Pedido();
+            p.setId(rs.getInt("id"));
+            p.setStatus(rs.getString("status"));
+            
+            
+            p.setProdutos(daoProduto.listarProdutosPedido(p.getId()));
+            p.setUsuario(usuarioDao.retornaUsuario((int)usuId));
+            p.setEndereco(p.getUsuario().getEndereco());
+            
+            if (p != null) {
+                pedidos.add(p);
+            }
+        }
+        
+        con.close();
+        
+        return pedidos;
     }
 }

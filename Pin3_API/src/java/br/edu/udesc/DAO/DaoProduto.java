@@ -142,6 +142,49 @@ public class DaoProduto {
         return produtos;
 
     }
+    
+    public List<Produto> listarProdutosPedido(long pedidoId) throws SQLException, ClassNotFoundException {
+        List<Produto> produtos = new ArrayList<>();
+        Connection con = Conexao.createConnection();
+
+        String sqlSelect = "SELECT * FROM public.tbproduto WHERE pedidoid = " + pedidoId;
+
+        PreparedStatement stmt = con.prepareStatement(sqlSelect);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Produto p = new Produto();
+            p.setId(rs.getInt("id"));
+            p.setDescricao(rs.getString("descricao"));
+            p.setDatavalidade(rs.getDate("datavalidade"));
+            p.setDatafabricacao(rs.getDate("datafabricacao"));
+            p.setPreco(rs.getDouble("preco"));
+            p.setLaboratorio(rs.getString("laboratorio"));
+            p.setLote(rs.getInt("lote"));
+            p.setQuantidade(rs.getInt("quantidade"));
+            p.setUsocontinuo(rs.getBoolean("usocontinuo"));
+            p.setControlado(rs.getBoolean("controlado"));
+            p.setTitulo(rs.getString("titulo"));
+            int idcategoria = rs.getInt("categoriaid");
+            
+            PreparedStatement s = con.prepareStatement("Select * from public.tbcategoria where id = " + idcategoria);
+            ResultSet r = s.executeQuery();
+            while (r.next()) {
+                Categoria c = new Categoria();
+                c.setId(r.getInt("id"));
+                c.setDescricao(r.getString("descricao"));       
+                p.setCategoria(c);
+            }
+            
+            if (p != null) {
+                produtos.add(p);
+            }
+        }
+        con.close();
+
+        return produtos;
+
+    }
+    
     public List<Produto> listarTodosComFiltro(String sConteudo, String sFiltro) throws SQLException, ClassNotFoundException {
         List<Produto> produtos = new ArrayList<>();
         Connection con = Conexao.createConnection();
