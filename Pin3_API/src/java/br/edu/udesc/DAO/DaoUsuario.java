@@ -16,56 +16,69 @@ import java.util.List;
  */
 public class DaoUsuario {
 
+    /*
+        As linhas abaixo foram comentadas, pois no memento só é possivel cadastrar o um usuário sem endereco
+    */
     public void cadastrar(Object obj) throws SQLException, ClassNotFoundException {
         Connection con = Conexao.createConnection();
 
+        
+        java.sql.Date sqlDate = null;
+        
         String sqlInsertUsuario = "INSERT INTO public.tbusuario(nome,cpf,email,administrador,datanascimento,telefone,enderecousuario,senha) VALUES (?,?,?,?,?,?,?,?)";
-        String sqlInsertEndereco = "INSERT INTO public.tbendereco(cidade,bairro,logradouro,numero,complemento,cep) VALUES (?, ?, ?, ?, ?, ?)";
+//        String sqlInsertEndereco = "INSERT INTO public.tbendereco(cidade,bairro,logradouro,numero,complemento,cep) VALUES (?, ?, ?, ?, ?, ?)";
         Usuario user = (Usuario) obj;
         try {
             con.setAutoCommit(true);
 
-            PreparedStatement stm = con.prepareStatement(sqlInsertEndereco);
-            stm.setString(1, user.getEndereco().getCidade());
-            stm.setString(2, user.getEndereco().getBairro());
-            stm.setString(3, user.getEndereco().getLogradouro());
-            stm.setInt(4, user.getEndereco().getNumero());
-            stm.setString(5, user.getEndereco().getComplemento());
-            stm.setString(6, user.getEndereco().getCep());
-            stm.execute();
-
-            String sqlRetornaChave = "SELECT max(id) FROM public.tbendereco where cidade = '" + user.getEndereco().getCidade()
-                    + "' and bairro = '" + user.getEndereco().getBairro()
-                    + "' and logradouro = '" + user.getEndereco().getLogradouro()
-                    + "' and numero =" + user.getEndereco().getNumero()
-                    + " and complemento = '" + user.getEndereco().getComplemento()
-                    + "' and cep = '" + user.getEndereco().getCep() + "'";
-
-            PreparedStatement st = con.prepareStatement(sqlRetornaChave);
-            ResultSet rs = st.executeQuery();
-            int idEndereco = 0;
-            while (rs.next()) {
-                idEndereco = rs.getInt("max");
-            }
+//            PreparedStatement stm = con.prepareStatement(sqlInsertEndereco);
+//            stm.setString(1, user.getEndereco().getCidade());
+//            stm.setString(2, user.getEndereco().getBairro());
+//            stm.setString(3, user.getEndereco().getLogradouro());
+//            stm.setInt(4, user.getEndereco().getNumero());
+//            stm.setString(5, user.getEndereco().getComplemento());
+//            stm.setString(6, user.getEndereco().getCep());
+//            stm.execute();
+//
+//            String sqlRetornaChave = "SELECT max(id) FROM public.tbendereco where cidade = '" + user.getEndereco().getCidade()
+//                    + "' and bairro = '" + user.getEndereco().getBairro()
+//                    + "' and logradouro = '" + user.getEndereco().getLogradouro()
+//                    + "' and numero =" + user.getEndereco().getNumero()
+//                    + " and complemento = '" + user.getEndereco().getComplemento()
+//                    + "' and cep = '" + user.getEndereco().getCep() + "'";
+//
+//            PreparedStatement st = con.prepareStatement(sqlRetornaChave);
+//            ResultSet rs = st.executeQuery();
+//            int idEndereco = 0;
+//            while (rs.next()) {
+//                idEndereco = rs.getInt("max");
+//            }
 
             PreparedStatement stmt = con.prepareStatement(sqlInsertUsuario);
             stmt.setString(1, user.getNome());
             stmt.setString(2, user.getCpf());
             stmt.setString(3, user.getEmail());
             stmt.setBoolean(4, false);
-            stmt.setDate(5, (Date) user.getDataNascimento());
+            
+            if(user.getDataNascimento() != null) {
+                sqlDate = new java.sql.Date(user.getDataNascimento().getTime());
+            }
+            
+            stmt.setDate(5, sqlDate);
             stmt.setString(6, user.getTelefone());
-            stmt.setInt(7, idEndereco);
+            stmt.setInt(7, 0);
             stmt.setString(8, user.getSenha());
 
             stmt.execute();
         } catch (SQLException ex) {
-            System.out.println("excesao");
+            System.out.println("EXCESAO:");
+            ex.printStackTrace();
         } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
-                System.out.println("erro");
+                System.out.println("ERRO");
+                ex.printStackTrace();
             }
         }
 

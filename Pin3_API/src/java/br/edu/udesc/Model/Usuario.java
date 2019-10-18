@@ -1,6 +1,7 @@
 package br.edu.udesc.Model;
 
 import java.util.Date;
+import javax.json.bind.annotation.JsonbDateFormat;
 
 /**
  *
@@ -14,6 +15,8 @@ public class Usuario {
     private String telefone;
     private String email;
     private String senha;
+    
+//    @JsonFormat(value = "yyyy-MM-dd HH:mm a z")
     private Date dataNascimento;
     private boolean administrador;
     private Endereco endereco;

@@ -33,30 +33,24 @@ public class ProdutoResource {
       
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTodasCategorias() throws SQLException, ClassNotFoundException {
+    public List<Produto> getTodasCategorias() throws SQLException, ClassNotFoundException {
         List<Produto> lProdutos = daoProduto.listarTodos();
-        return Response.status(Response.Status.CREATED)
-                       .header("Access-Control-Allow-Origin", "http://localhost:3000")
-                       .entity(lProdutos)
-                       .build();
+        return lProdutos;
     }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public Response getProduto(@PathParam("id") long id) throws SQLException, ClassNotFoundException {
+    public Produto getProduto(@PathParam("id") long id) throws SQLException, ClassNotFoundException {
         Produto p = daoProduto.getProduto(id);
         
-        return Response.status(Response.Status.CREATED)
-                .header("Access-Control-Allow-Origin", "http://localhost:3000")
-                .entity(p)
-                .build();
+        return p;
     }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/conteudo={pConteudo}&filtro={pFiltro}")
-    public Response getProdutoFiltrando(@PathParam("pConteudo") String sConteudo, @PathParam("pFiltro") String sFiltro) throws SQLException, ClassNotFoundException {
+    public List<Produto> getProdutoFiltrando(@PathParam("pConteudo") String sConteudo, @PathParam("pFiltro") String sFiltro) throws SQLException, ClassNotFoundException {
         List<Produto> lProdutos  = null;
         
         if(sConteudo.equals("")) {
@@ -65,27 +59,30 @@ public class ProdutoResource {
             lProdutos  = daoProduto.listarTodosComFiltro(sConteudo, sFiltro);
         }
         
-        return Response.status(Response.Status.CREATED)
-                .header("Access-Control-Allow-Origin", "http://localhost:3000")
-                .entity(lProdutos)
-                .build();
+        return lProdutos;
     }
-    
+//    
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("/conteudo={pConteudo}&filtro={pFiltro}")
+//    public Response getProdutoFiltrando(@PathParam("pConteudo") String sConteudo, @PathParam("pFiltro") String sFiltro) throws SQLException, ClassNotFoundException {
+//        List<Produto> lProdutos  = null;
+//        
+//        if(sConteudo.equals("")) {
+//            lProdutos = daoProduto.listarTodos(); 
+//        } else {
+//            lProdutos  = daoProduto.listarTodosComFiltro(sConteudo, sFiltro);
+//        }
+//        
+//        return Response.status(Response.Status.CREATED)
+//                .entity(lProdutos)
+//                .build();
+//    }
+//    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putCategoria(Produto p) throws SQLException, ClassNotFoundException {
         daoProduto.cadastrar(p);
     }
     
-    
-//     @Override
-//    public ContainerResponse filter(ContainerRequest creq, ContainerResponse cresp) {
-//
-//        cresp.getHttpHeaders().putSingle("Access-Control-Allow-Origin", "*");
-//        cresp.getHttpHeaders().putSingle("Access-Control-Allow-Credentials", "true");
-//        cresp.getHttpHeaders().putSingle("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS, HEAD");
-//        cresp.getHttpHeaders().putSingle("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
-//
-//        return cresp;
-//    }
 }

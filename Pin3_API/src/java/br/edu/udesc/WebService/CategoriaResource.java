@@ -29,12 +29,9 @@ public class CategoriaResource {
       
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTodasCategorias() throws SQLException, ClassNotFoundException {
+    public List<Categoria> getTodasCategorias() throws SQLException, ClassNotFoundException {
         List<Categoria> lCategoria = daoCatedoria.listarTodas();
-        return Response.status(Response.Status.CREATED)
-                       .header("Access-Control-Allow-Origin", "http://localhost:3000")
-                       .entity(lCategoria)
-                       .build();
+        return lCategoria;
     }
     
     @PUT

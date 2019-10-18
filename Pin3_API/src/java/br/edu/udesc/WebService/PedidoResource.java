@@ -34,22 +34,16 @@ public class PedidoResource {
     
     @GET
     @Path("/pedidos")
-    public Response getPedidosUsuario(@QueryParam("usuid") long id) throws SQLException, ClassNotFoundException {
+    public List<Pedido> getPedidosUsuario(@QueryParam("usuid") long id) throws SQLException, ClassNotFoundException {
         System.out.println("Usuario id: " + id);
         List<Pedido> lPedidos = daoPedido.listarPedidosUsuario(id);
-        return Response.status(Response.Status.CREATED)
-                .header("Access-Control-Allow-Origin", "http://localhost:3000")
-                .entity(lPedidos)
-                .build();
+        return lPedidos;
     }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTodosPedidos() throws SQLException, ClassNotFoundException {
+    public List<Pedido> getTodosPedidos() throws SQLException, ClassNotFoundException {
         List<Pedido> lPedidos = daoPedido.listarTodos();
-        return Response.status(Response.Status.CREATED)
-                .header("Access-Control-Allow-Origin", "http://localhost:3000")
-                .entity(lPedidos)
-                .build();
+        return lPedidos;
     }
 }
