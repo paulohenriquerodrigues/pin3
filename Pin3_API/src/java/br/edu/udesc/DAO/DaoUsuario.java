@@ -17,7 +17,8 @@ import java.util.List;
 public class DaoUsuario {
 
     /*
-        As linhas abaixo foram comentadas, pois no memento só é possivel cadastrar o um usuário sem endereco
+        As linhas abaixo foram comentadas, pois no memento só é possivel cadastrar o um usuário sem endereco, por isso todos os 
+        usuarios conectados tem o id de seu endereco setado com 1
     */
     public void cadastrar(Object obj) throws SQLException, ClassNotFoundException {
         Connection con = Conexao.createConnection();
@@ -66,7 +67,7 @@ public class DaoUsuario {
             
             stmt.setDate(5, sqlDate);
             stmt.setString(6, user.getTelefone());
-            stmt.setInt(7, 0);
+            stmt.setInt(7, 1);
             stmt.setString(8, user.getSenha());
 
             stmt.execute();
@@ -143,10 +144,14 @@ public class DaoUsuario {
             user.setCpf(rs.getString("cpf"));
             user.setEmail(rs.getString("email"));
             user.setAdministrador(rs.getBoolean("administrador"));
+            
+//             java.util.Date d = new java.util.Date(rs.getDate("datanascimento").getTime());
+             
+            
             user.setDataNascimento(rs.getDate("datanascimento"));
             user.setTelefone(rs.getString("telefone"));
             user.getEndereco().setId(rs.getInt("enderecousuario"));
-
+            
             PreparedStatement s = con.prepareStatement("Select * from public.tbendereco where id = " + user.getEndereco().getId());
             ResultSet r = s.executeQuery();
             while (r.next()) {

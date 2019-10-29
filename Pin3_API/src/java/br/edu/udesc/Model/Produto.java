@@ -60,7 +60,7 @@ public class Produto {
     }
 
     public void setDatavalidade(Date datavalidade) {
-        this.datavalidade = datavalidade;
+        this.datavalidade = (datavalidade == null)?new Date() : new Date(datavalidade.getTime());
     }
 
     public int getLote() {
@@ -92,7 +92,7 @@ public class Produto {
     }
 
     public void setDatafabricacao(Date datafabricacao) {
-        this.datafabricacao = datafabricacao;
+        this.datafabricacao = (datafabricacao == null)? new Date() : new Date(datafabricacao.getTime());
     }
 
     public boolean isUsocontinuo() {

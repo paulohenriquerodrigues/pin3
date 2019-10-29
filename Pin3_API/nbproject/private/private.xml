@@ -2,20 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/WebService/EnderecoResource.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/WebService/CategoriaResource.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/WebService/CORSResponseFilter.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/WebService/ApplicationConfig.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/WebService/UsuarioResource.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/WebService/PedidoResource.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/DAO/DaoProduto.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/WebService/ProdutoResource.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/DAO/DaoPedido.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/Model/Usuario.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/DAO/DaoUsuario.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/Model/Pedido.java</file>
-            <file>file:/C:/Users/Drew/Desktop/pin3-2ff208aa108f9070026ad90fe37a2c3402fd2068/Pin3_API/src/java/br/edu/udesc/WebService/GenericResource.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

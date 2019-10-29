@@ -15,7 +15,7 @@ public class Usuario {
     private String telefone;
     private String email;
     private String senha;
-    
+
 //    @JsonFormat(value = "yyyy-MM-dd HH:mm a z")
     private Date dataNascimento;
     private boolean administrador;
@@ -37,7 +37,6 @@ public class Usuario {
         this.endereco = endereco;
         this.cartao = cartao;
     }
-
 
     public int getId() {
         return id;
@@ -84,7 +83,7 @@ public class Usuario {
     }
 
     public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+        this.dataNascimento = (dataNascimento == null)? new Date() : new Date(dataNascimento.getTime());
     }
 
     public boolean isAdministrador() {
@@ -96,7 +95,7 @@ public class Usuario {
     }
 
     public Endereco getEndereco() {
-        if(endereco == null) {
+        if (endereco == null) {
             return new Endereco();
         }
         return endereco;
@@ -121,6 +120,5 @@ public class Usuario {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    
-    
+
 }

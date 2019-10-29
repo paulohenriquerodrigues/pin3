@@ -33,9 +33,11 @@ public class ProdutoResource {
       
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Produto> getTodasCategorias() throws SQLException, ClassNotFoundException {
+    public Response getTodasCategorias() throws SQLException, ClassNotFoundException {
         List<Produto> lProdutos = daoProduto.listarTodos();
-        return lProdutos;
+        return Response.status(Response.Status.CREATED)
+                .entity(lProdutos)
+                .build();
     }
     
     @GET
